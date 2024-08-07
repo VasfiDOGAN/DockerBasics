@@ -29,6 +29,7 @@ const startServer = (db) => {
   const port = 3000;
 
   const server = http.createServer((req, res) => {
+    console.log(`Request received at ${new Date().toISOString()} for URL: ${req.url}`);
     if (req.url === '/products') {
       db.query('SELECT * FROM products', (err, results) => {
         if (err) {
