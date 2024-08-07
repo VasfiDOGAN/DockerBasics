@@ -1,0 +1,14 @@
+{
+    "name": "docker-node-app",
+    "version": "1.0.0",
+    "description": "Node.js on Docker",
+    "author": "Vasfi",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "http": "^0.0.1-security",
+        "mysql": "^2.18.1"
+    }
+}

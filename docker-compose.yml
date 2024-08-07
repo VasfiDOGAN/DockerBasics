@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: ecommerce-platform-db-1
+    environment:
+      MYSQL_ROOT_PASSWORD: 123123123
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ecommerce-platform-network
+
+  app:
+    build: .
+    container_name: ecommerce-platform-app-1
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: 123123123
+      DB_NAME: mydatabase
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - ecommerce-platform-network
+
+  web:
+    image: nginx:latest
+    container_name: ecommerce-platform-web-1
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - ecommerce-platform-network
+
+volumes:
+  db-data:
+
+networks:
+  ecommerce-platform-network:
