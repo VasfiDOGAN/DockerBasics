@@ -30,6 +30,21 @@ services:
     networks:
       - ecommerce-platform-network
 
+  app2:
+    build: .
+    container_name: ecommerce-platform-app-2
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: 123123123
+      DB_NAME: mydatabase
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+    networks:
+      - ecommerce-platform-network
+
   web:
     image: nginx:latest
     container_name: ecommerce-platform-web-1
@@ -39,6 +54,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - app
+      - app2
     networks:
       - ecommerce-platform-network
 
